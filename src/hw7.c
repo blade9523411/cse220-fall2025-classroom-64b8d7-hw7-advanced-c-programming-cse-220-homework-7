@@ -12,7 +12,28 @@ void free_bst_sf(bst_sf *root) {
 }
 
 matrix_sf* add_mats_sf(const matrix_sf *mat1, const matrix_sf *mat2) {
-    return NULL;
+    if (mat1 == NULL || mat2 == NULL)
+        return NULL;
+    if (mat1->num_rows != mat2->num_rows ||mat1->num_cols != mat2->num_cols)
+        return NULL;
+
+    unsigned int rows = mat1->num_rows;
+    unsigned int cols = mat1->num_cols;
+    unsigned int n = rows * cols;
+
+    matrix_sf *answer = malloc(sizeof(matrix_sf) + n * sizeof(int));
+    if (answer == NULL)
+        return NULL;
+
+    answer->name = '?';
+    answer->num_rows = rows;
+    answer->num_cols = cols;
+
+    for (unsigned int i = 0; i < n; i++){
+        answer->values[i] = mat1->values[i] + mat2->values[i];
+    }
+
+    return answer;
 }
 
 matrix_sf* mult_mats_sf(const matrix_sf *mat1, const matrix_sf *mat2) {
